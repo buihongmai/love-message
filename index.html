@@ -1,51 +1,175 @@
-import random
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Confession</title>
 
-ten = input("Tên của bạn: ")
-thich = input("Bạn thích điều gì: ")
-no = input("Bạn đang ở đâu: ")
+<style>
+body{
+    font-family: Arial;
+    background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+    text-align:center;
+    padding-top:80px;
+    overflow:hidden;
+}
 
-loi_tinh = [
-f"""
-{ten} à,
+.box{
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    width:400px;
+    margin:auto;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+input{
+    width:80%;
+    padding:10px;
+    margin:8px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    background:#ff4d6d;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#ff1f4b;
+}
+
+#result{
+    margin-top:20px;
+    white-space:pre-line;
+    font-size:18px;
+}
+
+.heart{
+    position:fixed;
+    color:red;
+    font-size:20px;
+    animation:fall 5s linear infinite;
+}
+
+@keyframes fall{
+    from{transform:translateY(-10vh)}
+    to{transform:translateY(110vh)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>💌 Một lời nhắn dành cho bạn</h2>
+
+<input id="ten" placeholder="Tên của bạn"><br>
+<input id="thich" placeholder="Bạn thích điều gì"><br>
+<input id="no" placeholder="Bạn đang ở đâu"><br>
+
+<button onclick="taoLoi()">Xem tin nhắn</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+function taoLoi(){
+
+let ten=document.getElementById("ten").value
+let thich=document.getElementById("thich").value
+let no=document.getElementById("no").value
+
+let loi=[
+
+`${ten} à,
 
 Giữa thế giới rộng lớn này,
 mình lại chú ý đến một điều rất nhỏ:
-đó là bạn thích {thich}.
+đó là bạn thích ${thich}.
 
-Không biết ở {no},
+Không biết ở ${no},
 có ngày nào mình được cùng bạn
 đi dạo, trò chuyện
 và cùng nhau tận hưởng
-những điều giản dị đó không?
-""",
+những điều giản dị đó không?`,
 
-f"""
-{ten},
+`${ten},
 
-Nghe nói bạn thích {thich}.
+Nghe nói bạn thích ${thich}.
 Tự nhiên mình nghĩ rằng,
-nếu một ngày nào đó ở {no},
+nếu một ngày nào đó ở ${no},
 hai người cùng thích một điều giống nhau
 thì chắc cũng thú vị lắm.
 
 Mình chỉ muốn nói rằng
 gửi link này cho bạn
-không phải là ngẫu nhiên.
-""",
+không phải là ngẫu nhiên.`,
 
-f"""
-{ten} thân mến,
+`${ten} thân mến,
 
-Ở {no} chắc có nhiều điều đẹp,
+Ở ${no} chắc có nhiều điều đẹp,
 nhưng mình đoán
 điều làm bạn vui nhất
-có lẽ vẫn là {thich}.
+có lẽ vẫn là ${thich}.
 
 Nếu có dịp,
 mình cũng muốn được cùng bạn
-trải nghiệm điều đó.
-"""
+trải nghiệm điều đó.`
+
 ]
 
-print("\n--- Tin nhắn dành cho bạn ---\n")
-print(random.choice(loi_tinh))
+let text=loi[Math.floor(Math.random()*loi.length)]
+
+typeEffect(text)
+
+}
+
+function typeEffect(text){
+
+let i=0
+let result=document.getElementById("result")
+result.innerHTML=""
+
+let timer=setInterval(function(){
+
+result.innerHTML+=text.charAt(i)
+i++
+
+if(i>=text.length){
+clearInterval(timer)
+}
+
+},40)
+
+}
+
+
+function hearts(){
+
+let heart=document.createElement("div")
+heart.className="heart"
+heart.innerHTML="❤"
+
+heart.style.left=Math.random()*100+"vw"
+
+document.body.appendChild(heart)
+
+setTimeout(()=>heart.remove(),5000)
+
+}
+
+setInterval(hearts,300)
+
+</script>
+
+</body>
+</html>
